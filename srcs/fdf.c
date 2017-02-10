@@ -6,7 +6,7 @@
 /*   By: dzheng <dzheng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/10 16:06:01 by dzheng            #+#    #+#             */
-/*   Updated: 2017/02/10 16:56:11 by dzheng           ###   ########.fr       */
+/*   Updated: 2017/02/10 19:48:21 by dzheng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,15 +35,15 @@ int			ft_count_column(char *s)
 
 	count = 0;
 	i = 0;
-	while (s[i] != '\n')
+	while (s[i] != '\n' && s[i] != '\0')
 	{
-		if (s[i] == ' ')
+		i++;
+		if (s[i] == ' ' && s[i + 1] != '\n')
 		{
 			count++;
 			while (s[i] == ' ')
 				i++;
 		}
-		i++;
 	}
 	return (count + 1);
 }
@@ -55,14 +55,33 @@ int			**ft_get_coord(char *s)
 	int			**coord;
 	int			i;
 	int			j;
+	int			ind;
 
 	i = 0;
 	j = 0;
+	ind = -1;
 	count_line = ft_count_line(s);
 	count_column = ft_count_column(s);
-	printf("Count line = %d\n", count_line);
-	printf("Count column = %d\n", count_column);
+	printf("Count_line = %d\n", count_line);
+	printf("Count_column = %d\n", count_column);
 	coord = (int **)malloc(sizeof(int *) * count_line);
+	while (s[++ind] && i != count_line)
+	{
+		if (j == 0)
+			coord[i] = (int *)malloc(sizeof(int) * count_column);
+		if (ft_isdigit(s[ind]) || s[ind] == '-')
+		{
+			coord[i][j] = ft_atoi(&s[ind]);
+			j++;
+			if (j == count_column)
+			{
+				i++;
+				j = 0;
+			}
+			while (ft_isdigit(s[ind]) || s[ind] == '-')
+				ind++;
+		}
+	}
 	return (coord);
 }
 
@@ -100,8 +119,9 @@ int			main(int argc, char **argv)
 	else
 	{
 		s = read_file(argv[1]);
-		coord = ft_get_coord(s);
 		ft_printf("%s", s);
+		coord = ft_get_coord(s);
+		printf("Coord [2] [2] = %d", coord[2][2]);
 	}
 	return (0);
 }

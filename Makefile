@@ -6,7 +6,7 @@
 #    By: dzheng <dzheng@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/02/10 15:42:56 by dzheng            #+#    #+#              #
-#    Updated: 2017/02/10 16:56:51 by dzheng           ###   ########.fr        #
+#    Updated: 2017/02/10 18:47:54 by dzheng           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,6 +50,7 @@ fclean: clean
 test:
 	@${CC} -I./libft/ -Llibft/ -lft -I. -g -o ${NAME} \
 	$(addprefix srcs/, ${SRC})
+	./mlx test_maps/100-6.fdf
 
 re: fclean all
 
