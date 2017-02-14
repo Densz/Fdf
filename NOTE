@@ -43,6 +43,7 @@ int main() //RESULTAT
 		}
 		y++;
 	}
+	//Creer une action clavier
 	mlx_key_hook(win, my_key_funct, 0);
 	//Pour la gestion des events et la gestion du systeme graphique MacOS
 	//Et surtout pour voir la fenetre

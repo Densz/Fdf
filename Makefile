@@ -6,54 +6,43 @@
 #    By: dzheng <dzheng@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/02/10 15:42:56 by dzheng            #+#    #+#              #
-#    Updated: 2017/02/10 18:47:54 by dzheng           ###   ########.fr        #
+#    Updated: 2017/02/14 18:52:08 by dzheng           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = ./mlx
+NAME = fdf
+LIB_PATH = ./libft/
+LIB = $(LIB_PATH)/libft.a
+CC = cc
+FLAGS = -Wall -Wextra -Werror
+PATH_SRC = ./srcs/
+SRCS = $(PATH_SRC)fdf.c \
+		$(PATH_SRC)ft_check_tab.c
 
-SRC = fdf.c
+#COLORS
+C_GOOD			=	"\033[32m"
 
-OBJDIR = objs
+#MESSAGE
+SUCCESS			=	$(C_GOOD)SUCCESS$
 
-CFLAGS = -Wall -Wextra -Werror
+all: $(NAME)
 
-CC = gcc
+$(NAME): 
+		make -C ./libft/
+		@$(CC) $(FLAGS) $(SRCS) $(LIB) -o $(NAME)
+		@echo "Compiling" [ $(NAME) ] $(SUCCESS)
 
-OBJ = $(addprefix ${OBJDIR}/, $(SRC:.c=.o))
-
-all:${NAME}
-
-${NAME}: ${OBJ}
-	@make -C libft/
-	@echo Compiling ${NAME}
-	@${CC} ${CFLAGS} -Ilibft -Llibft/ -lft -I. -o $@ ${OBJ}
-	@echo "\033[32m./mlx is ready!\033[0m"
-
-${OBJDIR}/%.o : ./srcs/%.c
-	@echo Compiling $@
-	@/bin/mkdir -p ${OBJDIR}
-	@${CC} ${CFLAGS} -Ilibft -I. -c -o $@ $<
+test:		
+		@$(CC) $(FLAGS) $(SRCS) $(LIB) -o $(NAME)
+		./fdf 10-2.fdf
 
 clean:
-	@echo clean libft...
-	@make -C libft/ clean
-	@echo clean objs...
-	@/bin/rm -Rf ${OBJDIR}
+		make -C ./libft/ clean
 
 fclean: clean
-	@echo fclean libft...
-	@make -C libft/ fclean
-	@echo clean ${NAME}...
-	@/bin/rm -f ${NAME} test
-
-test:
-	@${CC} -I./libft/ -Llibft/ -lft -I. -g -o ${NAME} \
-	$(addprefix srcs/, ${SRC})
-	./mlx test_maps/100-6.fdf
+		/bin/rm -f $(NAME)
+		make -C ./libft/ fclean
 
 re: fclean all
 
-build: ${OBJ}
-
-.PHONY: all clean fclean re test
+.PHONY: all clean fclean re

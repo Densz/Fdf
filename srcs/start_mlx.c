@@ -1,37 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fdf.h                                              :+:      :+:    :+:   */
+/*   start_mlx.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dzheng <dzheng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/02/10 16:06:59 by dzheng            #+#    #+#             */
-/*   Updated: 2017/02/14 18:56:54 by dzheng           ###   ########.fr       */
+/*   Created: 2017/02/14 12:00:35 by dzheng            #+#    #+#             */
+/*   Updated: 2017/02/14 18:14:16 by dzheng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FDF
-# define FDF
+#include "../fdf.h"
 
-# include "./libft/libft.h"
-# include "mlx.h"
-
-typedef struct		s_data
+int			start_mlx(t_map map)
 {
-	int				x;
-	int				y;
-	int				z;
-}					t_data;
+	t_mlx		mlx;
 
-typedef struct 		s_mlx
-{
-	int				lines;
-	int				col;
-	void			*mlx;
-	void			*win;
-	t_data			**data;
-}					t_mlx;
-
-t_mlx				ft_fdf_parsing(char *s);
-
-#endif
+	mlx.mlx = mlx_init();
+	mlx.win = mlx_new_window(mlx.mlx, 1200, 1200, "FDF");
+	trace_line(map, mlx);
+	put_dot(map, mlx);
+	mlx_loop(mlx.mlx);
+	return (1);
+}
